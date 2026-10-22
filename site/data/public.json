@@ -1,0 +1,54 @@
+{
+  "dataset": "PRODUCTION",
+  "forecasts": [],
+  "generated_at": "2026-10-22T04:40:58.824488Z",
+  "release_id": "5e2fd779056245f6a9dd5f56670c317e0f241d090dc4febb8e850b059973e0f5",
+  "schema_version": "fis-public-v1",
+  "statistics": {
+    "cumulative_timeline": [],
+    "groups": {
+      "league": {},
+      "market_type": {},
+      "model_version": {},
+      "month": {},
+      "tier": {}
+    },
+    "overall": {
+      "E": 0,
+      "N": 0,
+      "correlated_same_match_picks": false,
+      "counts": {
+        "FULL_LOSS": 0,
+        "FULL_WIN": 0,
+        "HALF_LOSS": 0,
+        "HALF_WIN": 0,
+        "PUSH": 0,
+        "VOID": 0
+      },
+      "independent_matches": 0,
+      "invested_units": "0",
+      "net_profit": "0",
+      "red_numerator": 0,
+      "red_rate": null,
+      "red_rate_display": "—",
+      "roi": null,
+      "roi_display": "—",
+      "settled_pick_rows": 0,
+      "uncertainty": "有限样本的描述性统计；同场推荐相关，不代表真实胜率或未来收益。"
+    },
+    "rows": []
+  },
+  "status": {
+    "last_success_at": null,
+    "last_verified_commit": null,
+    "limitations": [
+      "FIS-094 PARTIAL：自动第二来源网页适配及真实跨站核验尚未完成。",
+      "报价是采集时参考价，不保证当前可成交；模型效果未经前瞻验证。"
+    ],
+    "message": "暂无正式战绩；尚未正式启用。",
+    "pending_reviews": 0,
+    "publication": "AWAITING_DEPLOYMENT_VERIFICATION",
+    "unresolved_results": 0
+  },
+  "timezone": "Asia/Shanghai"
+}

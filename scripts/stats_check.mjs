@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {summarize} from '../site/stats.js';
+const data=JSON.parse(fs.readFileSync(new URL('../site/data/public.json',import.meta.url)));
+const actual=summarize(data.statistics.rows);
+for(const [key,value] of Object.entries(actual))assert.deepEqual(value,data.statistics.overall[key],key);
+const classes=['FULL_WIN','FULL_WIN','FULL_WIN','FULL_WIN','HALF_WIN','PUSH','HALF_LOSS','HALF_LOSS','FULL_LOSS','FULL_LOSS'];
+const prices=['.8','.9','1','1.1','.6','0','-.5','-.5','-1','-1'];
+const sample=summarize(classes.map((c,i)=>({match_id:String(i),settlement_class:c,unit_profit:prices[i],invested_units:'1'})));
+assert.equal(sample.N,10);assert.equal(sample.E,9);assert.equal(sample.red_rate_display,'55.56%');assert.equal(sample.net_profit,'1.4');assert.equal(sample.roi_display,'14.00%');
+assert.equal(summarize([]).red_rate_display,'—');
+assert.equal(summarize([{match_id:'x',settlement_class:'VOID',unit_profit:'0',invested_units:'0'}]).roi_display,'—');
+console.log('PASS: browser decimal statistics match Python snapshot and SPEC vectors');

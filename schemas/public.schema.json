@@ -1,0 +1,1702 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "fis-public-v1"
+    },
+    "dataset": {
+      "enum": [
+        "PRODUCTION",
+        "TECHNICAL_DEMO"
+      ]
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+    },
+    "release_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "timezone": {
+      "const": "Asia/Shanghai"
+    },
+    "status": {
+      "type": "object",
+      "properties": {
+        "publication": {
+          "const": "AWAITING_DEPLOYMENT_VERIFICATION"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "last_success_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_verified_commit": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pending_reviews": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unresolved_results": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "maxItems": 5000
+        }
+      },
+      "required": [
+        "publication",
+        "message",
+        "last_success_at",
+        "last_verified_commit",
+        "pending_reviews",
+        "unresolved_results",
+        "limitations"
+      ],
+      "additionalProperties": false
+    },
+    "forecasts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "forecast_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "match_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "home_team": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "away_team": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "league": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "model_version": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "confidence": {
+            "enum": [
+              "高",
+              "中",
+              "低",
+              "未评级"
+            ]
+          },
+          "kickoff_utc": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+          },
+          "current_kickoff_utc": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "schedule_status": {
+            "enum": [
+              "SCHEDULED",
+              "POSTPONED",
+              "RESCHEDULED",
+              "CANCELLED",
+              "CONFLICT",
+              "UNKNOWN"
+            ]
+          },
+          "local_completed_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+          },
+          "model_status": {
+            "enum": [
+              "BASELINE",
+              "CANDIDATE"
+            ]
+          },
+          "public_committed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "deployment_verified_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "official_eligible": {
+            "type": "boolean"
+          },
+          "publication_status": {
+            "enum": [
+              "OFFICIAL",
+              "AWAITING_DEPLOYMENT_VERIFICATION",
+              "HISTORICAL"
+            ]
+          },
+          "status": {
+            "enum": [
+              "NOT_STARTED",
+              "AWAITING_RESULT",
+              "LIVE",
+              "CONFIRMED",
+              "VOID",
+              "CONFLICT",
+              "POSTPONED",
+              "CANCELLED",
+              "ABANDONED",
+              "ACCESS_RESTRICTED"
+            ]
+          },
+          "picks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "pick_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                },
+                "tier": {
+                  "enum": [
+                    "FIRST",
+                    "SECOND"
+                  ]
+                },
+                "market_type": {
+                  "enum": [
+                    "AH",
+                    "OU",
+                    "1X2"
+                  ]
+                },
+                "direction": {
+                  "enum": [
+                    "HOME",
+                    "AWAY",
+                    "DRAW",
+                    "OVER",
+                    "UNDER"
+                  ]
+                },
+                "line": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^-?\\d+(\\.\\d+)?$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "price": {
+                  "type": "string",
+                  "pattern": "^-?\\d+(\\.\\d+)?$"
+                },
+                "company": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                },
+                "quote_format": {
+                  "enum": [
+                    "NET_WATER",
+                    "DECIMAL"
+                  ]
+                },
+                "quote_captured_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+                },
+                "quote_updated_at": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "pick_id",
+                "tier",
+                "market_type",
+                "direction",
+                "line",
+                "price",
+                "company",
+                "quote_format",
+                "quote_captured_at",
+                "quote_updated_at"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 5000
+          },
+          "analysis": {
+            "type": "object",
+            "properties": {
+              "overview": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              },
+              "strongest_counterevidence": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              },
+              "primary_reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              },
+              "supporting_evidence": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 4000
+                    },
+                    "source_url": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 4000
+                    }
+                  },
+                  "required": [
+                    "text",
+                    "source_url"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 5000
+              },
+              "conflicts": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                },
+                "maxItems": 5000
+              },
+              "risks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                },
+                "maxItems": 5000
+              },
+              "candidates": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "market_type": {
+                      "enum": [
+                        "AH",
+                        "OU",
+                        "1X2"
+                      ]
+                    },
+                    "direction": {
+                      "enum": [
+                        "HOME",
+                        "AWAY",
+                        "DRAW",
+                        "OVER",
+                        "UNDER"
+                      ]
+                    },
+                    "line": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^-?\\d+(\\.\\d+)?$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "price": {
+                      "type": "string",
+                      "pattern": "^-?\\d+(\\.\\d+)?$"
+                    },
+                    "company": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 4000
+                    },
+                    "assessment": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 4000
+                    }
+                  },
+                  "required": [
+                    "market_type",
+                    "direction",
+                    "line",
+                    "price",
+                    "company",
+                    "assessment"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 5000
+              },
+              "secondary_value": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source_urls": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                },
+                "maxItems": 5000
+              }
+            },
+            "required": [
+              "overview",
+              "strongest_counterevidence",
+              "primary_reason",
+              "supporting_evidence",
+              "conflicts",
+              "risks",
+              "candidates",
+              "secondary_value",
+              "source_urls"
+            ],
+            "additionalProperties": false
+          },
+          "settlement_history": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "pick_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                },
+                "result_revision": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "settlement_class": {
+                  "enum": [
+                    "FULL_WIN",
+                    "HALF_WIN",
+                    "PUSH",
+                    "HALF_LOSS",
+                    "FULL_LOSS",
+                    "VOID"
+                  ]
+                },
+                "unit_profit": {
+                  "type": "string",
+                  "pattern": "^-?\\d+(\\.\\d+)?$"
+                },
+                "invested_units": {
+                  "enum": [
+                    "0",
+                    "1"
+                  ]
+                },
+                "at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+                },
+                "current_result": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "pick_id",
+                "result_revision",
+                "settlement_class",
+                "unit_profit",
+                "invested_units",
+                "at",
+                "current_result"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 5000
+          },
+          "result_revisions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "revision": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "status": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                },
+                "home": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "away": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+                },
+                "note": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                }
+              },
+              "required": [
+                "revision",
+                "status",
+                "home",
+                "away",
+                "at",
+                "note"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 5000
+          }
+        },
+        "required": [
+          "forecast_id",
+          "match_id",
+          "home_team",
+          "away_team",
+          "league",
+          "model_version",
+          "confidence",
+          "kickoff_utc",
+          "current_kickoff_utc",
+          "schedule_status",
+          "local_completed_at",
+          "model_status",
+          "public_committed_at",
+          "deployment_verified_at",
+          "official_eligible",
+          "publication_status",
+          "status",
+          "picks",
+          "analysis",
+          "settlement_history",
+          "result_revisions"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 5000
+    },
+    "statistics": {
+      "type": "object",
+      "properties": {
+        "overall": {
+          "type": "object",
+          "properties": {
+            "counts": {
+              "type": "object",
+              "properties": {
+                "FULL_WIN": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "HALF_WIN": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "PUSH": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "HALF_LOSS": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "FULL_LOSS": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "VOID": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "FULL_WIN",
+                "HALF_WIN",
+                "PUSH",
+                "HALF_LOSS",
+                "FULL_LOSS",
+                "VOID"
+              ],
+              "additionalProperties": false
+            },
+            "N": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "E": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "red_numerator": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "red_rate": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^-?\\d+(\\.\\d+)?$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "red_rate_display": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000
+            },
+            "invested_units": {
+              "type": "string",
+              "pattern": "^-?\\d+(\\.\\d+)?$"
+            },
+            "net_profit": {
+              "type": "string",
+              "pattern": "^-?\\d+(\\.\\d+)?$"
+            },
+            "roi": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^-?\\d+(\\.\\d+)?$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "roi_display": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000
+            },
+            "settled_pick_rows": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "independent_matches": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "correlated_same_match_picks": {
+              "type": "boolean"
+            },
+            "uncertainty": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000
+            }
+          },
+          "required": [
+            "counts",
+            "N",
+            "E",
+            "red_numerator",
+            "red_rate",
+            "red_rate_display",
+            "invested_units",
+            "net_profit",
+            "roi",
+            "roi_display",
+            "settled_pick_rows",
+            "independent_matches",
+            "correlated_same_match_picks",
+            "uncertainty"
+          ],
+          "additionalProperties": false
+        },
+        "groups": {
+          "type": "object",
+          "properties": {
+            "tier": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "counts": {
+                    "type": "object",
+                    "properties": {
+                      "FULL_WIN": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "HALF_WIN": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "PUSH": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "HALF_LOSS": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "FULL_LOSS": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "VOID": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "FULL_WIN",
+                      "HALF_WIN",
+                      "PUSH",
+                      "HALF_LOSS",
+                      "FULL_LOSS",
+                      "VOID"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "N": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "E": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "red_numerator": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "red_rate": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^-?\\d+(\\.\\d+)?$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "red_rate_display": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  },
+                  "invested_units": {
+                    "type": "string",
+                    "pattern": "^-?\\d+(\\.\\d+)?$"
+                  },
+                  "net_profit": {
+                    "type": "string",
+                    "pattern": "^-?\\d+(\\.\\d+)?$"
+                  },
+                  "roi": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^-?\\d+(\\.\\d+)?$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "roi_display": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  },
+                  "settled_pick_rows": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "independent_matches": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "correlated_same_match_picks": {
+                    "type": "boolean"
+                  },
+                  "uncertainty": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  }
+                },
+                "required": [
+                  "counts",
+                  "N",
+                  "E",
+                  "red_numerator",
+                  "red_rate",
+                  "red_rate_display",
+                  "invested_units",
+                  "net_profit",
+                  "roi",
+                  "roi_display",
+                  "settled_pick_rows",
+                  "independent_matches",
+                  "correlated_same_match_picks",
+                  "uncertainty"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "market_type": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "counts": {
+                    "type": "object",
+                    "properties": {
+                      "FULL_WIN": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "HALF_WIN": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "PUSH": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "HALF_LOSS": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "FULL_LOSS": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "VOID": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "FULL_WIN",
+                      "HALF_WIN",
+                      "PUSH",
+                      "HALF_LOSS",
+                      "FULL_LOSS",
+                      "VOID"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "N": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "E": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "red_numerator": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "red_rate": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^-?\\d+(\\.\\d+)?$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "red_rate_display": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  },
+                  "invested_units": {
+                    "type": "string",
+                    "pattern": "^-?\\d+(\\.\\d+)?$"
+                  },
+                  "net_profit": {
+                    "type": "string",
+                    "pattern": "^-?\\d+(\\.\\d+)?$"
+                  },
+                  "roi": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^-?\\d+(\\.\\d+)?$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "roi_display": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  },
+                  "settled_pick_rows": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "independent_matches": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "correlated_same_match_picks": {
+                    "type": "boolean"
+                  },
+                  "uncertainty": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  }
+                },
+                "required": [
+                  "counts",
+                  "N",
+                  "E",
+                  "red_numerator",
+                  "red_rate",
+                  "red_rate_display",
+                  "invested_units",
+                  "net_profit",
+                  "roi",
+                  "roi_display",
+                  "settled_pick_rows",
+                  "independent_matches",
+                  "correlated_same_match_picks",
+                  "uncertainty"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "league": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "counts": {
+                    "type": "object",
+                    "properties": {
+                      "FULL_WIN": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "HALF_WIN": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "PUSH": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "HALF_LOSS": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "FULL_LOSS": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "VOID": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "FULL_WIN",
+                      "HALF_WIN",
+                      "PUSH",
+                      "HALF_LOSS",
+                      "FULL_LOSS",
+                      "VOID"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "N": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "E": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "red_numerator": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "red_rate": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^-?\\d+(\\.\\d+)?$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "red_rate_display": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  },
+                  "invested_units": {
+                    "type": "string",
+                    "pattern": "^-?\\d+(\\.\\d+)?$"
+                  },
+                  "net_profit": {
+                    "type": "string",
+                    "pattern": "^-?\\d+(\\.\\d+)?$"
+                  },
+                  "roi": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^-?\\d+(\\.\\d+)?$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "roi_display": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  },
+                  "settled_pick_rows": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "independent_matches": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "correlated_same_match_picks": {
+                    "type": "boolean"
+                  },
+                  "uncertainty": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  }
+                },
+                "required": [
+                  "counts",
+                  "N",
+                  "E",
+                  "red_numerator",
+                  "red_rate",
+                  "red_rate_display",
+                  "invested_units",
+                  "net_profit",
+                  "roi",
+                  "roi_display",
+                  "settled_pick_rows",
+                  "independent_matches",
+                  "correlated_same_match_picks",
+                  "uncertainty"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "model_version": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "counts": {
+                    "type": "object",
+                    "properties": {
+                      "FULL_WIN": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "HALF_WIN": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "PUSH": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "HALF_LOSS": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "FULL_LOSS": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "VOID": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "FULL_WIN",
+                      "HALF_WIN",
+                      "PUSH",
+                      "HALF_LOSS",
+                      "FULL_LOSS",
+                      "VOID"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "N": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "E": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "red_numerator": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "red_rate": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^-?\\d+(\\.\\d+)?$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "red_rate_display": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  },
+                  "invested_units": {
+                    "type": "string",
+                    "pattern": "^-?\\d+(\\.\\d+)?$"
+                  },
+                  "net_profit": {
+                    "type": "string",
+                    "pattern": "^-?\\d+(\\.\\d+)?$"
+                  },
+                  "roi": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^-?\\d+(\\.\\d+)?$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "roi_display": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  },
+                  "settled_pick_rows": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "independent_matches": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "correlated_same_match_picks": {
+                    "type": "boolean"
+                  },
+                  "uncertainty": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  }
+                },
+                "required": [
+                  "counts",
+                  "N",
+                  "E",
+                  "red_numerator",
+                  "red_rate",
+                  "red_rate_display",
+                  "invested_units",
+                  "net_profit",
+                  "roi",
+                  "roi_display",
+                  "settled_pick_rows",
+                  "independent_matches",
+                  "correlated_same_match_picks",
+                  "uncertainty"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "month": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "counts": {
+                    "type": "object",
+                    "properties": {
+                      "FULL_WIN": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "HALF_WIN": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "PUSH": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "HALF_LOSS": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "FULL_LOSS": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "VOID": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "FULL_WIN",
+                      "HALF_WIN",
+                      "PUSH",
+                      "HALF_LOSS",
+                      "FULL_LOSS",
+                      "VOID"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "N": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "E": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "red_numerator": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "red_rate": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^-?\\d+(\\.\\d+)?$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "red_rate_display": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  },
+                  "invested_units": {
+                    "type": "string",
+                    "pattern": "^-?\\d+(\\.\\d+)?$"
+                  },
+                  "net_profit": {
+                    "type": "string",
+                    "pattern": "^-?\\d+(\\.\\d+)?$"
+                  },
+                  "roi": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^-?\\d+(\\.\\d+)?$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "roi_display": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  },
+                  "settled_pick_rows": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "independent_matches": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "correlated_same_match_picks": {
+                    "type": "boolean"
+                  },
+                  "uncertainty": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4000
+                  }
+                },
+                "required": [
+                  "counts",
+                  "N",
+                  "E",
+                  "red_numerator",
+                  "red_rate",
+                  "red_rate_display",
+                  "invested_units",
+                  "net_profit",
+                  "roi",
+                  "roi_display",
+                  "settled_pick_rows",
+                  "independent_matches",
+                  "correlated_same_match_picks",
+                  "uncertainty"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "tier",
+            "market_type",
+            "league",
+            "model_version",
+            "month"
+          ],
+          "additionalProperties": false
+        },
+        "cumulative_timeline": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kickoff_date": {
+                "type": "string",
+                "format": "date"
+              },
+              "counts": {
+                "type": "object",
+                "properties": {
+                  "FULL_WIN": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "HALF_WIN": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "PUSH": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "HALF_LOSS": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "FULL_LOSS": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "VOID": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "FULL_WIN",
+                  "HALF_WIN",
+                  "PUSH",
+                  "HALF_LOSS",
+                  "FULL_LOSS",
+                  "VOID"
+                ],
+                "additionalProperties": false
+              },
+              "N": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "E": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "red_numerator": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "red_rate": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^-?\\d+(\\.\\d+)?$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "red_rate_display": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              },
+              "invested_units": {
+                "type": "string",
+                "pattern": "^-?\\d+(\\.\\d+)?$"
+              },
+              "net_profit": {
+                "type": "string",
+                "pattern": "^-?\\d+(\\.\\d+)?$"
+              },
+              "roi": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^-?\\d+(\\.\\d+)?$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "roi_display": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              },
+              "settled_pick_rows": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "independent_matches": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "correlated_same_match_picks": {
+                "type": "boolean"
+              },
+              "uncertainty": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              }
+            },
+            "required": [
+              "kickoff_date",
+              "counts",
+              "N",
+              "E",
+              "red_numerator",
+              "red_rate",
+              "red_rate_display",
+              "invested_units",
+              "net_profit",
+              "roi",
+              "roi_display",
+              "settled_pick_rows",
+              "independent_matches",
+              "correlated_same_match_picks",
+              "uncertainty"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 5000
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "match_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              },
+              "forecast_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              },
+              "pick_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              },
+              "company": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              },
+              "league": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              },
+              "model_version": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4000
+              },
+              "tier": {
+                "enum": [
+                  "FIRST",
+                  "SECOND"
+                ]
+              },
+              "market_type": {
+                "enum": [
+                  "AH",
+                  "OU",
+                  "1X2"
+                ]
+              },
+              "direction": {
+                "enum": [
+                  "HOME",
+                  "AWAY",
+                  "DRAW",
+                  "OVER",
+                  "UNDER"
+                ]
+              },
+              "line": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^-?\\d+(\\.\\d+)?$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "price": {
+                "type": "string",
+                "pattern": "^-?\\d+(\\.\\d+)?$"
+              },
+              "quote_format": {
+                "enum": [
+                  "NET_WATER",
+                  "DECIMAL"
+                ]
+              },
+              "kickoff_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+              },
+              "settlement_class": {
+                "enum": [
+                  "FULL_WIN",
+                  "HALF_WIN",
+                  "PUSH",
+                  "HALF_LOSS",
+                  "FULL_LOSS",
+                  "VOID"
+                ]
+              },
+              "unit_profit": {
+                "type": "string",
+                "pattern": "^-?\\d+(\\.\\d+)?$"
+              },
+              "invested_units": {
+                "enum": [
+                  "0",
+                  "1"
+                ]
+              },
+              "date": {
+                "type": "string",
+                "format": "date"
+              },
+              "month": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}$"
+              }
+            },
+            "required": [
+              "match_id",
+              "forecast_id",
+              "pick_id",
+              "company",
+              "league",
+              "model_version",
+              "tier",
+              "market_type",
+              "direction",
+              "line",
+              "price",
+              "quote_format",
+              "kickoff_utc",
+              "settlement_class",
+              "unit_profit",
+              "invested_units",
+              "date",
+              "month"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 5000
+        }
+      },
+      "required": [
+        "overall",
+        "groups",
+        "cumulative_timeline",
+        "rows"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "dataset",
+    "generated_at",
+    "release_id",
+    "timezone",
+    "status",
+    "forecasts",
+    "statistics"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FIS public whitelist v1"
+}
