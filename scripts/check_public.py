@@ -33,6 +33,16 @@ def validate(data,schema):
     walk(data)
     expected=hashlib.sha256(json.dumps({k:v for k,v in data.items() if k!='release_id'},sort_keys=True,ensure_ascii=False,separators=(',',':'),allow_nan=False).encode()).hexdigest()
     if data['release_id']!=expected:raise ValueError('Public release content hash mismatch')
+    state=data['status'];context=state.get('deployment_context')
+    if context:
+        previous=context['previous_verified_release_id'] is not None
+        failed=context['latest_attempt_status']=='FAILED'
+        expected_state=('PREVIOUS_SUCCESS_LATEST_ATTEMPT_FAILED' if previous else 'LATEST_ATTEMPT_FAILED') if failed else ('PREVIOUS_DEPLOYMENT_VERIFIED' if previous else 'AWAITING_DEPLOYMENT_VERIFICATION')
+        if state['publication']!=expected_state:raise ValueError('Publication state contradicts deployment context')
+        if previous and (not state['last_success_at'] or not state['last_verified_commit']):raise ValueError('Previous deployment proof missing')
+        if failed and not context['latest_failure_code']:raise ValueError('Failure reason missing')
+        if not failed and context['latest_failure_code'] is not None:raise ValueError('Failure reason without failed attempt')
+    elif state['publication']!='AWAITING_DEPLOYMENT_VERIFICATION':raise ValueError('Legacy snapshot cannot claim new deployment status')
     rows=data['statistics']['rows'];summary=data['statistics']['overall']
     active=[r for r in rows if r['settlement_class']!='VOID']
     if summary['N']!=len(active) or summary['E']!=len([r for r in active if r['settlement_class']!='PUSH']):raise ValueError('Statistics denominator mismatch')

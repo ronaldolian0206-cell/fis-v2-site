@@ -26,7 +26,12 @@
       "type": "object",
       "properties": {
         "publication": {
-          "const": "AWAITING_DEPLOYMENT_VERIFICATION"
+          "enum": [
+            "AWAITING_DEPLOYMENT_VERIFICATION",
+            "PREVIOUS_DEPLOYMENT_VERIFIED",
+            "PREVIOUS_SUCCESS_LATEST_ATTEMPT_FAILED",
+            "LATEST_ATTEMPT_FAILED"
+          ]
         },
         "message": {
           "type": "string",
@@ -73,6 +78,58 @@
             "maxLength": 4000
           },
           "maxItems": 5000
+        },
+        "deployment_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "snapshot_verified": {
+              "const": false
+            },
+            "previous_verified_release_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "latest_attempt_release_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "latest_attempt_status": {
+              "enum": [
+                "ONLINE_VERIFIED",
+                "FAILED",
+                null
+              ]
+            },
+            "latest_failure_code": {
+              "enum": [
+                "WORKFLOW_FAILED",
+                "ONLINE_HASH_MISMATCH",
+                "NETWORK_ERROR",
+                "UNAUTHORIZED",
+                "BUILD_FAILED",
+                "PUSH_FAILED",
+                null
+              ]
+            },
+            "availability": {
+              "const": "NOT_LIVE_CHECKED_BY_STATIC_EXPORT"
+            }
+          },
+          "required": [
+            "snapshot_verified",
+            "previous_verified_release_id",
+            "latest_attempt_release_id",
+            "latest_attempt_status",
+            "latest_failure_code",
+            "availability"
+          ]
         }
       },
       "required": [

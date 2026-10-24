@@ -1,8 +1,8 @@
 {
   "dataset": "PRODUCTION",
   "forecasts": [],
-  "generated_at": "2026-10-22T04:40:58.824488Z",
-  "release_id": "5e2fd779056245f6a9dd5f56670c317e0f241d090dc4febb8e850b059973e0f5",
+  "generated_at": "2026-10-22T07:37:50.683925Z",
+  "release_id": "69f4c82133fdb79f6ed4758bd9b226d907895740bc59898e144a230a3c16a513",
   "schema_version": "fis-public-v1",
   "statistics": {
     "cumulative_timeline": [],
@@ -39,15 +39,23 @@
     "rows": []
   },
   "status": {
-    "last_success_at": null,
-    "last_verified_commit": null,
+    "deployment_context": {
+      "availability": "NOT_LIVE_CHECKED_BY_STATIC_EXPORT",
+      "latest_attempt_release_id": "5e2fd779056245f6a9dd5f56670c317e0f241d090dc4febb8e850b059973e0f5",
+      "latest_attempt_status": "ONLINE_VERIFIED",
+      "latest_failure_code": null,
+      "previous_verified_release_id": "5e2fd779056245f6a9dd5f56670c317e0f241d090dc4febb8e850b059973e0f5",
+      "snapshot_verified": false
+    },
+    "last_success_at": "2026-10-22T06:58:19.613525Z",
+    "last_verified_commit": "ebc8c9aa883bf0d2d64470763178c68403873abb",
     "limitations": [
       "FIS-094 PARTIAL：自动第二来源网页适配及真实跨站核验尚未完成。",
       "报价是采集时参考价，不保证当前可成交；模型效果未经前瞻验证。"
     ],
     "message": "暂无正式战绩；尚未正式启用。",
     "pending_reviews": 0,
-    "publication": "AWAITING_DEPLOYMENT_VERIFICATION",
+    "publication": "PREVIOUS_DEPLOYMENT_VERIFIED",
     "unresolved_results": 0
   },
   "timezone": "Asia/Shanghai"
